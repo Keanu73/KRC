@@ -1,0 +1,32 @@
+plugins {
+    id 'org.spongepowered.plugin' version '0.6'
+}
+
+repositories {
+    mavenCentral()
+}
+
+group = 'me.keanu73.krc' // TODO
+version = '0.0.1'
+description = 'IRC plugin'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'KRC',
+                   'Implementation-Version': version
+    }
+}
+
+uploadArchives {
+    repositories {
+        flatDir {
+            dirs 'jars'
+        }
+    }
+}
+
+dependencies {
+    compile 'org.spongepowered:spongeapi:5.0.0'
+    compile 'org.pircbotx:pircbotx:2.1'
+    compile 'org.slf4j:slf4j-api:1.7.22'
+}
