@@ -22,22 +22,19 @@
 
 package me.keanu73.krc.commands;
 
-import org.spongepowered.api.command.spec.CommandSpec;
-import org.spongepowered.api.text.Text;
+import org.spongepowered.api.command.CommandException;
+import org.spongepowered.api.command.CommandResult;
+import org.spongepowered.api.command.CommandSource;
+import org.spongepowered.api.command.args.CommandContext;
+import org.spongepowered.api.command.spec.CommandExecutor;
 
 /**
- * Created by Keanu on 28/12/2016.
+ * Created by Keanu on 31/12/2016.
  */
-public class CommandHandler {
-    public static CommandSpec connect = CommandSpec.builder()
-            .description(Text.of("Connect the IRC bot if not connected"))
-            .executor(new ConnectCommand())
-            .permission("krc.connect")
-            .build();
+public class ConnectCommand implements CommandExecutor {
 
-    public static CommandSpec mainSpec = CommandSpec.builder()
-            .child(connect, "connect")
-            .description(Text.of("The KRC Sponge plugin"))
-            .executor(new MainCommand())
-            .build();
+    @Override
+    public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+        return CommandResult.success();
+    }
 }

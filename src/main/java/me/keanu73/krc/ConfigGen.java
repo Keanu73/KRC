@@ -27,7 +27,6 @@ import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
-import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.spongepowered.api.config.DefaultConfig;
 
@@ -42,9 +41,6 @@ import java.nio.file.Path;
 public class ConfigGen {
 
     @Inject
-    private Logger logger;
-
-    @Inject
     @DefaultConfig(sharedRoot = true)
     public static Path config = FileSystems.getDefault().getPath("krc.conf"); // The actual path for the config, we don't want it to be null
 
@@ -54,12 +50,13 @@ public class ConfigGen {
 
     public static CommentedConfigurationNode rootNode = loader.createEmptyNode(ConfigurationOptions.defaults()); // Create an empty node.
 
-    public void createConfig() {
+    public static void createConfig() {
         try {
             if (Files.exists(config)) {
                 rootNode = loader.load(); // Load the node anyway.
+                KRC.logger.info("Configuration file loaded.");
             } else if (!Files.exists(config)) {
-                logger.info("Creating configuration file...");
+                KRC.logger.info("Creating configuration file...");
                 Files.createFile(config); // Create the config file.
                 rootNode = loader.load(); // Load the node.
                 rootNode.getNode("config", "BotName").setValue("MinecraftServerBot"); // Initialize the node settings.
@@ -74,11 +71,11 @@ public class ConfigGen {
                 rootNode.getNode("config", "NickServNick").setComment("The nickname for your NickServ login.");
                 rootNode.getNode("config", "NickServPassword").setValue("yournickservpasswordhere");
                 rootNode.getNode("config", "NickServPassword").setComment("Put your NickServ password here.");
-                logger.info("Configuration file completed.");
+                KRC.logger.info("Configuration file completed.");
                 loader.save(rootNode);
             }
         } catch (IOException ex) {
-            logger.error((Marker) ex, "Whoops! Ran into an error."); // Shoot, we ran into an IOException.
+            KRC.logger.error((Marker) ex, "Whoops! Ran into an error."); // Shoot, we ran into an IOException.
             ex.printStackTrace();
         }
     }

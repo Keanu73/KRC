@@ -40,7 +40,7 @@ public class KRC {
     public static final String url = "https://keanu73.me";
 
     @Inject
-    public Logger logger;
+    public static Logger logger;
 
     @Listener
     public void GameStart(GameStartedServerEvent event) {
@@ -57,8 +57,10 @@ public class KRC {
 
     @Listener
     public void Init(GameInitializationEvent e) {
-
-        Sponge.getCommandManager().register(this, CommandHandler.reload, "reload"); // Register commands.
+        ConfigGen.createConfig();
+        Sponge.getCommandManager().register(this, CommandHandler.mainSpec, "krc"); // Register commands.
+        Sponge.getCommandManager().register(this, CommandHandler.connect, "connect");
+        logger.info("Commands + config initialized.");
     }
 
 }
