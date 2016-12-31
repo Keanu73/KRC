@@ -40,7 +40,7 @@ public class KRC {
     public static final String url = "https://keanu73.me";
 
     @Inject
-    public static Logger logger;
+    private Logger logger;
 
     @Listener
     public void GameStart(GameStartedServerEvent event) {
