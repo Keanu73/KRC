@@ -37,7 +37,7 @@ import org.spongepowered.api.text.format.TextColors;
 public class MainCommand implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-        src.sendMessage(Text.of(TextColors.GOLD, "KRC ", TextColors.WHITE, KRC.version + " - ", TextColors.GOLD, "A Sponge IRC plugin",  TextColors.GOLD, " - Created by Keanu73"));
+        src.sendMessage(Text.of(TextColors.GOLD, "KRC ", TextColors.WHITE, KRC.version, TextColors.GOLD, " - ", TextColors.GOLD, "A Sponge IRC plugin",  TextColors.GOLD, " - Created by Keanu73"));
         return CommandResult.success();
     }
 }

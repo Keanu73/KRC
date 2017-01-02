@@ -24,6 +24,7 @@ package me.keanu73.krc;
 
 import com.google.inject.Inject;
 import me.keanu73.krc.commands.CommandHandler;
+import me.keanu73.krc.config.ConfigGen;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
@@ -47,20 +48,19 @@ public class KRC {
         //logger.info("KRC is starting up the IRC bot...");
     }
 
-    // Getting the settings so we can use it for the IRC bot
-    public String botname = ConfigGen.rootNode.getNode("config", "BotName").getString();
-    public String server = ConfigGen.rootNode.getNode("config", "IRCServer").getString();
-    public String channel = ConfigGen.rootNode.getNode("config", "Channel").getString();
-    public Boolean nickserv = ConfigGen.rootNode.getNode("config", "NickServ").getBoolean();
-    public String nickservnick = ConfigGen.rootNode.getNode("config", "NickServNick").getString();
-    public String nickservpassword = ConfigGen.rootNode.getNode("config", "NickServPassword").getString();
-
     @Listener
     public void Init(GameInitializationEvent e) {
-        ConfigGen.createConfig();
+        try {
+            ConfigGen.createConfig();
+        } catch (NullPointerException ex) {
+            logger.error("Whoops! We ran into an error. Contact Keanu73.", ex);
+        }
         Sponge.getCommandManager().register(this, CommandHandler.mainSpec, "krc"); // Register commands.
         Sponge.getCommandManager().register(this, CommandHandler.connect, "connect");
         logger.info("Commands + config initialized.");
+
     }
+
+    // Getting the settings so we can use it for the IRC bot
 
 }
